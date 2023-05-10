@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import axios from 'axios'
 
 export async function getStaticProps(){
@@ -20,7 +20,33 @@ export async function getStaticProps(){
  
 
 const notes = ({notes}) => {
+    const [visibility, setVisibility] = useState(false)
+    const [title, setTitle] = useState('')
+    const [content, setContent] = useState('')
+    const [noteId, setNoteId] = useState('')
+
+    const editForm = (title, content, noteId) => {
+        setVisibility(visibility => !visibility)
+        setTitle(title)
+        setContent(content)
+        setNoteId(noteId)
+    }
+    const updateNote = async (todoId) =>{
+        const noteObj = {
+            title: title,
+            content: content
+          }
+          console.log(noteObj)
+         await axios.put(`/api/updateNote?id=${noteId}`, noteObj)
+          .then(()=>{
+            window.location.reload(false)
+          })
+    }
+
+
+
   return (
+    <>
     <div>
         <section>
             <h3>All Notes</h3>
@@ -31,12 +57,28 @@ const notes = ({notes}) => {
                 <li key={i}>
                     <p>{note.title}</p>
                     <h3>{note.content}</h3>
+                    <p><button onClick={(title, content, noteId)=>editForm(note.title, note.content, note._id)} >Edit</button></p>
                 </li>
                 )
                })} 
             </ul>
         </section>
     </div>
+    
+    {visibility && <div className='container'>
+    <h1>Update Todo</h1>
+    <form>
+      <div className="mb-3">
+        <input type="text"  id="title"  value={title} onChange={(event)=>setTitle(event.target.value)}/>          
+      </div>
+      <div className="mb-3">
+        <input type="text"  id="content" value={content} onChange={(event)=>setContent(event.target.value)}/>          
+      </div>
+      <button type="submit" onClick={()=>updateNote(noteId)}>Submit</button>
+      <button onClick={()=>setVisibility(visibility => !visibility)}>Cancel</button>
+    </form>
+  </div>}
+  </>
   )
 }
 
