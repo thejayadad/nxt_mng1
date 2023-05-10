@@ -43,6 +43,11 @@ const notes = ({notes}) => {
           })
     }
 
+    const deleteNote = (noteId) =>{
+        axios.delete(`/api/deleteNote?id=${noteId}`).then(()=>{
+            window.location.reload(false)
+        })
+    }
 
 
   return (
@@ -57,6 +62,7 @@ const notes = ({notes}) => {
                 <li key={i}>
                     <p>{note.title}</p>
                     <h3>{note.content}</h3>
+                    <p><button  onClick={()=>deleteNote(note._id)}>Delete</button></p>
                     <p><button onClick={(title, content, noteId)=>editForm(note.title, note.content, note._id)} >Edit</button></p>
                 </li>
                 )
