@@ -6,7 +6,7 @@ export default function Posts({ posts }) {
             <h1>List of All Post</h1>
             <ul>
                 {posts.map((post, i) => (
-                    <li key={post.i}>
+                    <li key={i}>
                         <h2>{post.title}</h2>
                         <h3>{post.content}</h3>
                     </li>
