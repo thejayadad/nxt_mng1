@@ -9,7 +9,7 @@ async function handler(req, res){
     try{
         const { title, content} = req.body
 
-        await mongoose.connect('mongodb://localhost/nextJSCRUD',{
+        await mongoose.connect('mongodb://127.0.0.1:27017/nextJSCRUD',{
             useNewUrlParser: true,
         }).then(()=> console.log(' DB connected'))
 

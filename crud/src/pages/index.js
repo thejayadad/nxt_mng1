@@ -19,6 +19,7 @@ export default function Home() {
   return (
     <>
     <h2>New Note</h2>
+    <a href="/notes">Notes</a>
     <form onSubmit={handleSubmit}>
     <input type="text"  id="title"  onChange={(event)=>setTitle(event.target.value)}/>          
     <input type="text"  id="content"  onChange={(event)=>setContent(event.target.value)}/>          
